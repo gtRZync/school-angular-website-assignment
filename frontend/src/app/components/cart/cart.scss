@@ -1,0 +1,33 @@
+.table td, .table th {
+  vertical-align: middle;
+}
+
+.container h2{
+  margin-bottom: 1rem;
+}
+
+.table{
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+input[type="number"].form-control{
+  max-width: 100px;
+}
+
+.btn-success{
+  color: var(--bg-canvas);
+}
+
+/* Empty state */
+.empty{
+  background: var(--bg-elev-1);
+  border: 1px dashed var(--border);
+  padding: 2rem;
+  border-radius: var(--radius);
+  text-align: center;
+  color: var(--text-secondary);
+}

@@ -1,0 +1,44 @@
+.header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--bg-elev-1);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      color: var(--text-primary);
+    }
+    .nav a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 600;
+      padding: .4rem .6rem;
+      border-radius: 8px;
+      transition: background-color .2s ease, color .2s ease;
+    }
+    .nav a:hover {
+      background: var(--bg-elev-2);
+      color: var(--text-primary);
+    }
+    .logo a {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: .3px;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .badge{
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background: var(--danger);
+      color: var(--bg-canvas);
+      border-radius: 999px;
+      padding: 2px 6px;
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,.15);
+    }

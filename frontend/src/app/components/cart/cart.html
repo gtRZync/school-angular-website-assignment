@@ -1,0 +1,45 @@
+<div class="container py-3">
+  <h2>Cart</h2>
+  @if(items().length === 0){
+    <div class="empty">
+      <p>Your cart is empty.</p>
+      <a class="btn btn-primary mt-3" [routerLink]="['/products']">Browse products</a>
+    </div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+        <tr>
+          <th>Product</th>
+          <th style="width:140px">Qty</th>
+          <th class="text-end">Price</th>
+          <th class="text-end">Subtotal</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @for (ci of items(); track ci.product.id) {
+          <tr>
+            <td>{{ci.product.title}}</td>
+            <td>
+              <input type="number" class="form-control form-control-sm" [ngModel]="ci.quantity" (ngModelChange)="updateQty(ci.product.id, $event)" min="0">
+            </td>
+            <td class="text-end">{{ci.product.price | currency:'USD'}}</td>
+            <td class="text-end">{{(ci.product.price * ci.quantity) | currency:'USD'}}</td>
+            <td class="text-end"><button class="btn btn-sm btn-outline-danger" (click)="remove(ci.product.id)">Remove</button></td>
+          </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="3" class="text-end fw-bold">Total</td>
+          <td class="text-end fw-bold">{{ total() | currency:'USD' }}</td>
+          <td class="text-end"><button class="btn btn-success" (click)="checkout()">Validate order</button></td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  }
+</div>
+
+

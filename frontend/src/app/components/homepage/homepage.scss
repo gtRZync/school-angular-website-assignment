@@ -1,0 +1,25 @@
+.hero{
+  background: var(--bg-elev-1);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero .container{
+  max-width: 900px;
+}
+
+.hero h1{
+  font-size: 2.25rem;
+}
+
+.hero .lead{
+  color: var(--text-secondary);
+}
+
+/* Feature cards */
+.row .p-4{
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}

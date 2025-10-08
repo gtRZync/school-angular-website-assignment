@@ -1,0 +1,14 @@
+.login-container{
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.login-container form{
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.form-group{ margin-bottom: 1rem; }
