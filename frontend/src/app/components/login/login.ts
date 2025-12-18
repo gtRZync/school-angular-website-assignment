@@ -3,6 +3,8 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../../services/user';
+import { CartService } from '../../services/cart.service';
+import { API_CONFIG } from '../../config/api.config';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +20,8 @@ export class Login {
 
   private readonly user = inject(User);
   private readonly router = inject(Router);
-  private readonly apiUrl = 'http://localhost:8000/api';
+  private readonly cart = inject(CartService);
+  private readonly apiUrl = API_CONFIG.baseUrl;
 
   constructor() {
     this.loginForm = new FormGroup({
@@ -39,6 +42,8 @@ export class Login {
       .subscribe({
         next: () => {
           this.loading = false;
+          // Initialize cart after login
+          this.cart.initialize();
           this.router.navigateByUrl('/');
         },
         error: (err) => {

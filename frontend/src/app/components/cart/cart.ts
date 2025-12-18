@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
 import { RouterLink } from '@angular/router';
@@ -11,11 +11,16 @@ import { RouterLink } from '@angular/router';
   templateUrl: './cart.html',
   styleUrl: './cart.scss'
 })
-export class Cart {
+export class Cart implements OnInit {
   private readonly cart = inject(CartService);
 
   items = this.cart.items;
   total = computed(() => this.cart.total());
+
+  ngOnInit(): void {
+    // Initialize cart when component loads
+    this.cart.initialize();
+  }
 
   remove(id: number) {
     this.cart.remove(id);
