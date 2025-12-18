@@ -16,6 +16,9 @@
           <a [routerLink]="['/login']">Login</a>
           <a [routerLink]="['/register']">Register</a>
         } @else {
+          @if(isAdmin()) {
+            <a [routerLink]="['/admin/products']" class="btn btn-sm btn-outline-warning">Admin</a>
+          }
           <button class="btn btn-sm btn-outline-light" (click)="logout()">Logout</button>
         }
       </nav>
