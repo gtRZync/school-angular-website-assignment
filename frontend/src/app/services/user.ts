@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, map, tap, catchError, of } from 'rxjs';
 import { StorageService } from './storage.service';
 
 export interface LoginPayload {
@@ -63,7 +63,18 @@ export class User {
     );
   }
 
-  logout(): void {
+  logout(apiUrl?: string): Observable<void> | void {
+    if (apiUrl && this.token) {
+      return this.http.post<void>(`${apiUrl}/logout`, {}).pipe(
+        tap(() => this.token = null),
+        map(() => void 0),
+        catchError(() => {
+          // Even if API call fails, clear local token
+          this.token = null;
+          return of(void 0);
+        })
+      );
+    }
     this.token = null;
   }
 }
