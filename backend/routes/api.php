@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +17,50 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Public routes
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+// Public product routes
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/categories', [ProductController::class, 'categories']);
+Route::get('/products/category/{category}', [ProductController::class, 'byCategory']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+
+// Protected routes (require authentication)
+Route::middleware('auth:api')->group(function () {
+    Route::get('/user', [AuthController::class, 'me']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    
+    // Cart routes
+    Route::get('/cart', [CartController::class, 'index']);
+    Route::post('/cart/add', [CartController::class, 'add']);
+    Route::put('/cart/{id}', [CartController::class, 'update']);
+    Route::delete('/cart/{id}', [CartController::class, 'remove']);
+    Route::delete('/cart', [CartController::class, 'clear']);
+    Route::get('/cart/total', [CartController::class, 'total']);
+    
+    // Example protected route
+    Route::get('/protected', function (Request $request) {
+        return response()->json([
+            'message' => 'This is a protected route',
+            'user' => $request->user()
+        ]);
+    });
+});
+
+// Admin only routes
+Route::middleware(['auth:api', 'admin'])->group(function () {
+    Route::get('/admin', function (Request $request) {
+        return response()->json([
+            'message' => 'This is an admin only route',
+            'user' => $request->user()
+        ]);
+    });
+    
+    // Product management (admin only)
+    Route::post('/products', [ProductController::class, 'store']);
+    Route::put('/products/{id}', [ProductController::class, 'update']);
+    Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 });
